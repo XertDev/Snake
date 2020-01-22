@@ -29,6 +29,8 @@ public class World {
             Vector3D pos = node.getPosition();
             if(occupation.containsKey(pos)){
                 occupation.replace(pos, occupation.get(pos) + 1);
+            } else {
+                occupation.put(pos, 0);
             }
         });
 
