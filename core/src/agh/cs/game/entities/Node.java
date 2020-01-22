@@ -1,7 +1,5 @@
 package agh.cs.game.entities;
 
-
-
 import agh.cs.game.INodePositionChangeObserver;
 import agh.cs.game.utils.Vector3D;
 

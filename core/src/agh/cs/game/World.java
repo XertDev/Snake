@@ -2,7 +2,7 @@ package agh.cs.game;
 
 import agh.cs.game.entities.Apple;
 import agh.cs.game.entities.Snake;
-import agh.cs.game.errors.GameLogicError;
+import agh.cs.game.errors.GameLogicException;
 import agh.cs.game.utils.Vector3D;
 
 import java.util.*;
@@ -54,7 +54,7 @@ public class World {
 
         if(snakeMapEntityCollide()){
             if(worldMap.getApple().isEmpty()) {
-                throw new GameLogicError("Game logic error");
+                throw new GameLogicException("Apple not exist");
             }
             final int appleEnergy = worldMap.getApple().get().getEnergy();
             snake.eat(appleEnergy);

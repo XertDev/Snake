@@ -4,6 +4,7 @@ package agh.cs.game.entities;
 import agh.cs.game.ISnakeNodeGrowObserver;
 import agh.cs.game.utils.Vector3D;
 import agh.cs.game.utils.View;
+import agh.cs.game.utils.ViewDirection;
 
 import java.util.*;
 

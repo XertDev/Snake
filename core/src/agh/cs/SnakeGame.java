@@ -5,12 +5,12 @@ import agh.cs.game.IAppleEatObserver;
 import agh.cs.game.World;
 import agh.cs.game.entities.Apple;
 import agh.cs.game.entities.Snake;
-import agh.cs.game.entities.ViewDirection;
+import agh.cs.game.utils.ViewDirection;
 import agh.cs.game.utils.Vector3D;
 import agh.cs.game.utils.View;
 import agh.cs.models.AppleModel;
 import agh.cs.models.SnakeModel;
-import agh.cs.models.WallModel;
+import agh.cs.utils.Wall;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -52,37 +52,37 @@ public class SnakeGame extends ApplicationAdapter implements IAppleEatObserver, 
     private Long elapsedTime;
     private int frame = 0;
 
-    private final int  mapSize = 9;
-    private final float mapCellSize = 5f;
+    static private final int  mapSize = 9;
+    static private final float mapCellSize = 5f;
 
     private int actualSnakeEnergy = 0;
     static private int wallDepth= 5;
 
-    private WallModel[] generateWalls() {
+    private Wall[] generateWalls() {
         int halfMapSize = mapSize/2;
-        return new WallModel[] {
+        return new Wall[] {
 
-                        new WallModel(
+                        new Wall(
                                 new Vector3(mapSize*mapCellSize, halfMapSize*mapCellSize ,halfMapSize*mapCellSize),
                                 new Vector3(wallDepth, mapSize*mapCellSize, mapSize*mapCellSize)
                         ),
-                        new WallModel(
+                        new Wall(
                                 new Vector3(-wallDepth, halfMapSize*mapCellSize ,halfMapSize*mapCellSize),
                                 new Vector3(wallDepth, mapSize*mapCellSize, mapSize*mapCellSize)
                         ),
-                        new WallModel(
+                        new Wall(
                                 new Vector3(halfMapSize*mapCellSize, mapSize*mapCellSize ,halfMapSize*mapCellSize),
                                 new Vector3(mapSize*mapCellSize, wallDepth, mapSize*mapCellSize)
                         ),
-                        new WallModel(
+                        new Wall(
                                 new Vector3(halfMapSize*mapCellSize, -wallDepth  ,halfMapSize*mapCellSize),
                                 new Vector3(mapSize*mapCellSize, wallDepth, mapSize*mapCellSize)
                         ),
-                        new WallModel(
+                        new Wall(
                                 new Vector3(halfMapSize*mapCellSize, halfMapSize*mapCellSize  ,mapSize*mapCellSize),
                                 new Vector3(mapSize*mapCellSize, mapSize*mapCellSize, wallDepth)
                         ),
-                        new WallModel(
+                        new Wall(
                                 new Vector3(halfMapSize*mapCellSize, halfMapSize*mapCellSize  ,-wallDepth),
                                 new Vector3(mapSize*mapCellSize, mapSize*mapCellSize, wallDepth)
                         ),
@@ -98,11 +98,11 @@ public class SnakeGame extends ApplicationAdapter implements IAppleEatObserver, 
         modelBatch = new ModelBatch();
         textBatch = new SpriteBatch();
 
-        WallModel[] wallSections = generateWalls();
+        Wall[] wallSections = generateWalls();
 
         ModelBuilder modelBuilder = new ModelBuilder();
 
-        for(WallModel wallSection: wallSections) {
+        for(Wall wallSection: wallSections) {
             final float width = wallSection.getSize().x;
             final float height = wallSection.getSize().y;
             final float depth = wallSection.getSize().z;
@@ -155,12 +155,10 @@ public class SnakeGame extends ApplicationAdapter implements IAppleEatObserver, 
 
     private void updateCamera() {
         Vector3 cameraPosition = snake.getNodes().get(0).getPosition().toVector3().scl(mapCellSize);
-//        Vector3 cameraPosition = new Vector3(0,0,0);
         Vector3 upCamera = snake.getView().localUp.toVector3().scl(mapCellSize/2);
         camera.position.set(cameraPosition);
         final Vector3 lookAtPoint = new Vector3(camera.position)
                 .add(snake.getView().localForward.toVector3().scl(mapCellSize));
-//        final Vector3 lookAtPoint = new Vector3(mapSize* mapCellSize, mapSize*mapCellSize, mapSize*mapCellSize);
         camera.lookAt(lookAtPoint);
         camera.update();
 

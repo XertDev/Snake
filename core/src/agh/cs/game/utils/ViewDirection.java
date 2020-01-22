@@ -1,4 +1,4 @@
-package agh.cs.game.entities;
+package agh.cs.game.utils;
 
 public enum ViewDirection {
     UP,
