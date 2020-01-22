@@ -14,6 +14,7 @@ import agh.cs.utils.Wall;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -39,6 +40,7 @@ public class SnakeGame extends ApplicationAdapter implements IAppleEatObserver, 
     private BitmapFont bitmapFont;
     private SpriteBatch textBatch;
 
+    private Sound pointsUpSound;
 
     private List<Model> walls = new ArrayList<>();
     private List<ModelInstance> wallInstances = new ArrayList<>();
@@ -118,6 +120,8 @@ public class SnakeGame extends ApplicationAdapter implements IAppleEatObserver, 
 
         bitmapFont = new BitmapFont();
 
+        pointsUpSound =  Gdx.audio.newSound(Gdx.files.internal("service-bell_daniel_simion.wav"));
+
         initGame();
 
         elapsedTime = System.currentTimeMillis();
@@ -189,6 +193,7 @@ public class SnakeGame extends ApplicationAdapter implements IAppleEatObserver, 
         textBatch.end();
 
     }
+
 	
 	@Override
 	public void dispose () {
@@ -220,6 +225,7 @@ public class SnakeGame extends ApplicationAdapter implements IAppleEatObserver, 
 
     @Override
     public void appleEat() {
+        pointsUpSound.play();
         appleModel.dispose();
         appleModel = null;
     }
